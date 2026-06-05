@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nyay AI — Justice Technology</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --black: #080810;
+  --deep: #0e0e1a;
+  --card: #13131f;
+  --border: rgba(255,255,255,0.07);
+  --red: #d4163c;
+  --red-glow: rgba(212,22,60,0.18);
+  --gold: #c8a96e;
+  --gold-dim: rgba(200,169,110,0.15);
+  --white: #f2ede6;
+  --muted: rgba(242,237,230,0.45);
+  --green: #2ecc71;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* GRAIN */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 4rem;
+  background: rgba(8,8,16,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: .75rem;
+}
+.nav-logo img {
+  height: 36px; width: 36px;
+  object-fit: contain;
+  filter: invert(1);
+  opacity: .9;
+}
+.nav-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--white);
+}
+.nav-logo-text span { color: var(--red); }
+.nav-links {
+  display: flex; gap: 2.5rem; list-style: none;
+}
+.nav-links a {
+  font-size: .78rem; letter-spacing: .14em;
+  text-transform: uppercase; font-weight: 400;
+  color: var(--muted); text-decoration: none;
+  transition: color .25s;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-btn {
+  font-family: 'Outfit', sans-serif;
+  font-size: .78rem; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase;
+  background: var(--red); color: #fff;
+  padding: .6rem 1.6rem; border: none; cursor: pointer;
+  text-decoration: none; display: inline-block;
+  transition: opacity .2s;
+}
+.nav-btn:hover { opacity: .85; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 8rem 4rem 5rem;
+}
+
+/* Radial glow */
+#hero::before {
+  content: '';
+  position: absolute;
+  top: 20%; left: 50%; transform: translateX(-50%);
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,22,60,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1100px; width: 100%;
+  display: grid; grid-template-columns: 1fr 420px;
+  gap: 5rem; align-items: center;
+  position: relative; z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .68rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-dim);
+  padding: .35rem 1rem; margin-bottom: 2rem;
+  animation: fadeUp .7s ease both;
+}
+.badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; } 50% { opacity: .4; }
+}
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 900; line-height: 1.05;
+  color: var(--white);
+  animation: fadeUp .7s .1s ease both;
+}
+.hero-title em {
+  font-style: italic; color: var(--red);
+  display: block;
+}
+.hero-title .underline-gold {
+  position: relative; display: inline-block;
+}
+.hero-title .underline-gold::after {
+  content: '';
+  position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--gold); opacity: .6;
+}
+
+.hero-desc {
+  margin-top: 1.8rem;
+  font-size: 1.05rem; line-height: 1.8; color: var(--muted);
+  max-width: 520px;
+  animation: fadeUp .7s .2s ease both;
+}
+.hero-desc strong { color: var(--white); font-weight: 500; }
+
+.hero-btns {
+  margin-top: 2.5rem;
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  animation: fadeUp .7s .3s ease both;
+}
+.btn-red {
+  background: var(--red); color: #fff;
+  padding: .85rem 2rem; font-size: .85rem;
+  font-family: 'Outfit', sans-serif; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  border: none; cursor: pointer; text-decoration: none;
+  display: inline-block;
+  transition: transform .2s, opacity .2s;
+}
+.btn-red:hover { transform: translateY(-2px); opacity: .9; }
+.btn-ghost {
+  background: transparent; color: var(--white);
+  padding: .85rem 2rem; font-size: .85rem;
+  font-family: 'Outfit', sans-serif; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  border: 1px solid rgba(242,237,230,.2); cursor: pointer;
+  text-decoration: none; display: inline-block;
+  transition: border-color .2s, transform .2s;
+}
+.btn-ghost:hover { border-color: var(--white); transform: translateY(-2px); }
+
+/* HERO RIGHT — Logo Card */
+.hero-logo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 3rem 2rem;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1.5rem;
+  animation: fadeUp .7s .35s ease both;
+  position: relative; overflow: hidden;
+}
+.hero-logo-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+.hero-logo-card img {
+  width: 180px; height: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 24px rgba(212,22,60,.2));
+}
+.hero-logo-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700; text-align: center;
+  color: var(--white);
+}
+.hero-logo-card-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold); text-align: center;
+}
+.live-tag {
+  display: flex; align-items: center; gap: .4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--green);
+}
+.live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  animation: pulse 1.5s ease infinite;
+}
+
+/* ── PROBLEM STRIP ── */
+.problem-strip {
+  background: var(--red);
+  padding: 2rem 4rem;
+  display: flex; justify-content: center; gap: 5rem;
+  flex-wrap: wrap;
+}
+.pstrip-item { text-align: center; }
+.pstrip-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 900; color: #fff; line-height: 1;
+}
+.pstrip-label {
+  font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(255,255,255,.7); margin-top: .3rem;
+}
+
+/* ── SECTIONS ── */
+.section { padding: 7rem 4rem; }
+.section-inner { max-width: 1100px; margin-inline: auto; }
+.eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .68rem; letter-spacing: .25em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 1rem;
+}
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 900; line-height: 1.1;
+  color: var(--white);
+}
+.section-heading em { font-style: italic; color: var(--gold); }
+
+/* ── PROBLEM SECTION ── */
+#problem { background: var(--deep); }
+.problem-intro {
+  margin-top: 1.5rem; max-width: 620px;
+  font-size: 1rem; line-height: 1.8; color: var(--muted);
+}
+.problem-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1px; margin-top: 3.5rem;
+  background: var(--border);
+}
+.pcard {
+  background: var(--deep);
+  padding: 2.5rem 2rem;
+  position: relative; overflow: hidden;
+  transition: background .3s;
+}
+.pcard:hover { background: var(--card); }
+.pcard-line {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--red);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .5s ease;
+}
+.pcard:hover .pcard-line { transform: scaleX(1); }
+.pcard-icon { font-size: 2rem; margin-bottom: 1rem; }
+.pcard h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--white);
+  margin-bottom: .75rem;
+}
+.pcard p { font-size: .9rem; color: var(--muted); line-height: 1.75; }
+.pcard-stat {
+  margin-top: 1.2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem; color: var(--red); letter-spacing: .05em;
+}
+
+/* ── HOW IT WORKS ── */
+#howitworks { background: var(--black); }
+.flow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0; margin-top: 4rem;
+  position: relative;
+}
+.flow-grid::before {
+  content: '';
+  position: absolute; top: 2.5rem; left: 0; right: 0;
+  height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+.flow-step {
+  padding: 0 2rem 3rem;
+  text-align: center; position: relative;
+}
+.flow-num-wrap {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--black);
+  border: 2px solid var(--red);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem;
+  position: relative; z-index: 1;
+}
+.flow-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem; font-weight: 600; color: var(--red);
+}
+.flow-icon { font-size: 1.4rem; margin-bottom: .8rem; }
+.flow-step h4 {
+  font-size: .95rem; font-weight: 600; color: var(--white);
+  margin-bottom: .5rem;
+}
+.flow-step p { font-size: .82rem; color: var(--muted); line-height: 1.7; }
+
+/* ── ROLES ── */
+#roles { background: var(--deep); }
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem; margin-top: 3.5rem;
+}
+.role-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2rem 1.8rem;
+  position: relative; overflow: hidden;
+  transition: border-color .3s, transform .3s;
+}
+.role-card:hover { border-color: rgba(212,22,60,.4); transform: translateY(-4px); }
+.role-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--red);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+}
+.role-card:hover::after { transform: scaleX(1); }
+.role-emoji { font-size: 2rem; margin-bottom: 1rem; }
+.role-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem; font-weight: 700; color: var(--white);
+  margin-bottom: .75rem;
+}
+.role-card ul {
+  list-style: none; display: flex; flex-direction: column; gap: .5rem;
+}
+.role-card ul li {
+  font-size: .83rem; color: var(--muted); line-height: 1.5;
+  padding-left: 1rem; position: relative;
+}
+.role-card ul li::before {
+  content: '→';
+  position: absolute; left: 0; color: var(--red); font-size: .75rem;
+}
+
+/* ── CHAIN VISUAL ── */
+#chain { background: var(--black); }
+.chain-explainer {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center; margin-top: 4rem;
+}
+.chain-visual {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  position: relative;
+}
+.chain-visual::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red), var(--gold));
+}
+.chain-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.chain-row:last-child { border-bottom: none; }
+.chain-icon-box {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: rgba(212,22,60,.1);
+  border: 1px solid rgba(212,22,60,.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.chain-row-text { flex: 1; }
+.chain-row-text h5 {
+  font-size: .88rem; font-weight: 600; color: var(--white);
+  margin-bottom: .2rem;
+}
+.chain-row-text p { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+.chain-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .6rem; letter-spacing: .1em;
+  padding: .2rem .6rem;
+  border: 1px solid;
+}
+.chain-badge.ok { color: var(--green); border-color: rgba(46,204,113,.3); }
+.chain-badge.alert { color: var(--red); border-color: rgba(212,22,60,.3); }
+
+.chain-text .section-heading { margin-bottom: 1.5rem; }
+.chain-text p {
+  font-size: .97rem; color: var(--muted); line-height: 1.8; margin-bottom: 1rem;
+}
+.chain-text p strong { color: var(--white); font-weight: 500; }
+.tech-stack { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+.tech-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .65rem; letter-spacing: .12em;
+  color: var(--gold); border: 1px solid var(--gold-dim);
+  padding: .3rem .8rem;
+}
+
+/* ── IMPACT ── */
+#impact { background: var(--deep); }
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px; margin-top: 3.5rem;
+  background: var(--border);
+}
+.impact-cell {
+  background: var(--deep); padding: 3rem 2rem; text-align: center;
+  transition: background .3s;
+}
+.impact-cell:hover { background: var(--card); }
+.impact-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; font-weight: 900; color: var(--red); line-height: 1;
+}
+.impact-label {
+  font-size: .82rem; color: var(--muted); margin-top: .75rem; line-height: 1.5;
+}
+
+/* ── VISION ── */
+#vision {
+  background: linear-gradient(160deg, #0e0018 0%, var(--black) 60%);
+  text-align: center; padding: 7rem 4rem;
+}
+.vision-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 700; font-style: italic;
+  line-height: 1.3; color: var(--white);
+  max-width: 800px; margin-inline: auto;
+  position: relative;
+}
+.vision-quote::before {
+  content: '\201C';
+  font-size: 8rem; color: rgba(212,22,60,.15);
+  position: absolute; top: -3rem; left: -2rem;
+  font-family: 'Playfair Display', serif; line-height: 1;
+  pointer-events: none;
+}
+.vision-attr {
+  margin-top: 2rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .7rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── CTA ── */
+#cta {
+  background: var(--red); padding: 6rem 4rem;
+  text-align: center;
+}
+#cta .eyebrow { color: rgba(255,255,255,.6); }
+#cta .section-heading { color: #fff; }
+#cta .section-heading em { color: rgba(255,255,255,.85); }
+#cta p {
+  color: rgba(255,255,255,.75); margin-top: 1.2rem;
+  font-size: 1rem; max-width: 500px; margin-inline: auto;
+}
+#cta .hero-btns { justify-content: center; margin-top: 2.5rem; }
+#cta .btn-red { background: #fff; color: var(--red); }
+#cta .btn-ghost { border-color: rgba(255,255,255,.4); color: #fff; }
+#cta .btn-ghost:hover { border-color: #fff; }
+
+/* ── FOOTER ── */
+footer {
+  background: #040408;
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo {
+  display: flex; align-items: center; gap: .6rem;
+}
+.footer-logo img {
+  height: 28px; filter: invert(1); opacity: .7;
+}
+.footer-logo span {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 700; color: var(--white);
+}
+footer p { font-size: .75rem; color: rgba(255,255,255,.3); }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-size: .75rem; color: rgba(255,255,255,.3);
+  text-decoration: none; letter-spacing: .08em; text-transform: uppercase;
+  transition: color .2s;
+}
+.footer-links a:hover { color: var(--white); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .section { padding: 5rem 1.5rem; }
+  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-logo-card { order: -1; }
+  .chain-explainer { grid-template-columns: 1fr; gap: 3rem; }
+  .problem-strip { padding: 1.5rem 1.5rem; gap: 2rem; }
+  footer { flex-direction: column; text-align: center; }
+  #hero { padding: 7rem 1.5rem 4rem; }
+  #vision, #cta { padding: 5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="Nyay AI Logo"/>
+    <span class="nav-logo-text">Nyay<span>.</span>AI</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#howitworks">How It Works</a></li>
+    <li><a href="#roles">Roles</a></li>
+    <li><a href="#impact">Impact</a></li>
+  </ul>
+  <a href="https://arnubiswas20-dot.github.io/Nyay-AI/" target="_blank" class="nav-btn">Live Demo →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        MVP Live · IBM Watsonx · Blockchain
+      </div>
+      <h1 class="hero-title">
+        Evidence Can't Lie<br/>
+        <em>If No One Can Touch It.</em>
+      </h1>
+      <p class="hero-desc">
+        In South Asia, evidence in rape and assault cases is routinely tampered —
+        <strong>by money, by power, by broken systems.</strong><br/><br/>
+        Nyay AI builds an <strong>immutable, cryptographic chain of custody</strong>
+        from crime scene to courtroom — so justice becomes impossible to suppress.
+      </p>
+      <div class="hero-btns">
+        <a href="#" class="btn-red">▶ Watch Pitch Video</a>
+        <a href="https://arnubiswas20-dot.github.io/Nyay-AI/" target="_blank" class="btn-ghost">Try Live Prototype →</a>
+      </div>
+    </div>
+    <div class="hero-logo-card">
+      <img src="logo.png" alt="Nyay AI"/>
+      <div class="hero-logo-card-title">Nyay AI</div>
+      <div class="hero-logo-card-sub">Justice Technology</div>
+      <div class="live-tag"><div class="live-dot"></div> Prototype Live</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="problem-strip">
+  <div class="pstrip-item">
+    <div class="pstrip-num">90%+</div>
+    <div class="pstrip-label">Cases — Evidence Tampered</div>
+  </div>
+  <div class="pstrip-item">
+    <div class="pstrip-num">4 Roles</div>
+    <div class="pstrip-label">Officer · Lab · Hospital · Judge</div>
+  </div>
+  <div class="pstrip-item">
+    <div class="pstrip-num">0 Edits</div>
+    <div class="pstrip-label">Once Filed, Never Changed</div>
+  </div>
+  <div class="pstrip-item">
+    <div class="pstrip-num">Real-Time</div>
+    <div class="pstrip-label">Tamper Alert to Judge</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section id="problem" class="section">
+  <div class="section-inner">
+    <p class="eyebrow reveal">// 01 — Root Cause</p>
+    <h2 class="section-heading reveal">The System Isn't Broken.<br/><em>It Was Never Built For Her.</em></h2>
+    <p class="problem-intro reveal">
+      Gender inequality creates the culture. But evidence tampering gives criminals the escape route.
+      Nyay AI seals that escape route — forever.
+    </p>
+    <div class="problem-cards">
+      <div class="pcard reveal">
+        <div class="pcard-line"></div>
+        <div class="pcard-icon">📝</div>
+        <h3>Pen & Paper Evidence Logs</h3>
+        <p>Officers still document crime scenes on paper — editable, losable, destroyable. A bribe buys a rewrite. The first version of truth disappears.</p>
+        <div class="pcard-stat">→ No original photo timestamp. No tamper detection.</div>
+      </div>
+      <div class="pcard reveal">
+        <div class="pcard-line"></div>
+        <div class="pcard-icon">🔬</div>
+        <h3>Lab Handoffs With No Lock</h3>
+        <p>Physical evidence reaches the lab with zero cryptographic verification. Lab technicians can alter reports, swap samples — no audit trail exists.</p>
+        <div class="pcard-stat">→ DNA reports changed. Cases dismissed. Accused walks free.</div>
+      </div>
+      <div class="pcard reveal">
+        <div class="pcard-line"></div>
+        <div class="pcard-icon">⚖️</div>
+        <h3>Judges See a Broken Story</h3>
+        <p>By the time evidence reaches court, pieces are missing, dates are wrong, reports contradict each other. Judges can't trust what they can't verify.</p>
+        <div class="pcard-stat">→ Justice delayed becomes justice denied.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="howitworks" class="section">
+  <div class="section-inner">
+    <p class="eyebrow reveal">// 02 — The System</p>
+    <h2 class="section-heading reveal">From Crime Scene<br/><em>To Courtroom — Sealed.</em></h2>
+    <div class="flow-grid">
+      <div class="flow-step reveal">
+        <div class="flow-num-wrap"><span class="flow-num">01</span></div>
+        <div class="flow-icon">📸</div>
+        <h4>Evidence Captured</h4>
+        <p>Officer photographs and registers all evidence digitally — on the spot, in real time.</p>
+      </div>
+      <div class="flow-step reveal">
+        <div class="flow-num-wrap"><span class="flow-num">02</span></div>
+        <div class="flow-icon">🔐</div>
+        <h4>QR + Hash Generated</h4>
+        <p>System instantly creates a cryptographic hash and a QR code — printed and attached to the physical evidence box.</p>
+      </div>
+      <div class="flow-step reveal">
+        <div class="flow-num-wrap"><span class="flow-num">03</span></div>
+        <div class="flow-icon">🧪</div>
+        <h4>Lab Verification</h4>
+        <p>Lab technician scans QR. If the photo hash doesn't match — <strong style="color:var(--red)">TAMPER ALERT fires instantly.</strong> Report is blocked until verified.</p>
+      </div>
+      <div class="flow-step reveal">
+        <div class="flow-num-wrap"><span class="flow-num">04</span></div>
+        <div class="flow-icon">🏥</div>
+        <h4>Hospital MLC Report</h4>
+        <p>Medical officer uploads MLC report with the same hash-locked process. Biological sample page goes to lab. Trauma report goes to court.</p>
+      </div>
+      <div class="flow-step reveal">
+        <div class="flow-num-wrap"><span class="flow-num">05</span></div>
+        <div class="flow-icon">👨‍⚖️</div>
+        <h4>Judge Gets Full Truth</h4>
+        <p>One verified dashboard: officer report + lab report + MLC + chain of custody timeline — all with date/time stamps. Court order generated in one click.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ROLES -->
+<section id="roles" class="section">
+  <div class="section-inner">
+    <p class="eyebrow reveal">// 03 — Four Roles</p>
+    <h2 class="section-heading reveal">Every Handoff.<br/><em>Every Person. Accountable.</em></h2>
+    <div class="roles-grid">
+      <div class="role-card reveal">
+        <div class="role-emoji">👮</div>
+        <h3>Police Officer</h3>
+        <ul>
+          <li>Registers evidence digitally at crime scene</li>
+          <li>Clicks timestamped photos — immutable</li>
+          <li>Generates QR code for physical box</li>
+          <li>Can NEVER delete or edit after submission</li>
+        </ul>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-emoji">🔬</div>
+        <h3>Lab Technician</h3>
+        <ul>
+          <li>Scans QR on arriving evidence</li>
+          <li>Hash verified before report writing</li>
+          <li>Tamper alert blocks chain if mismatch</li>
+          <li>Report locked once submitted</li>
+        </ul>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-emoji">🏥</div>
+        <h3>Hospital / Doctor</h3>
+        <ul>
+          <li>Uploads MLC report digitally</li>
+          <li>Biological sample page → lab (hash-locked)</li>
+          <li>Victim trauma report → court (sealed)</li>
+          <li>Same QR + hash verification process</li>
+        </ul>
+      </div>
+      <div class="role-card reveal">
+        <div class="role-emoji">👨‍⚖️</div>
+        <h3>Judge</h3>
+        <ul>
+          <li>Sees complete verified case file</li>
+          <li>Full chain-of-custody timeline</li>
+          <li>Tamper alerts visible with timestamps</li>
+          <li>One-click court report generation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAIN VISUAL -->
+<section id="chain" class="section">
+  <div class="section-inner">
+    <div class="chain-explainer">
+      <div class="chain-visual reveal">
+        <div class="chain-row">
+          <div class="chain-icon-box">📸</div>
+          <div class="chain-row-text">
+            <h5>Evidence Photographed</h5>
+            <p>Hash: <code style="color:var(--gold);font-size:.75rem">a3f9d2...c4e1</code> · Officer ID verified</p>
+          </div>
+          <span class="chain-badge ok">✓ LOGGED</span>
+        </div>
+        <div class="chain-row">
+          <div class="chain-icon-box">📦</div>
+          <div class="chain-row-text">
+            <h5>Physical Box Transferred</h5>
+            <p>QR printed · sealed · courier record timestamped</p>
+          </div>
+          <span class="chain-badge ok">✓ SEALED</span>
+        </div>
+        <div class="chain-row">
+          <div class="chain-icon-box">⚠️</div>
+          <div class="chain-row-text">
+            <h5>Lab Scan — Hash Mismatch</h5>
+            <p>Photo hash doesn't match original: <code style="color:var(--red);font-size:.75rem">MISMATCH</code></p>
+          </div>
+          <span class="chain-badge alert">⚠ TAMPER</span>
+        </div>
+        <div class="chain-row">
+          <div class="chain-icon-box">🚨</div>
+          <div class="chain-row-text">
+            <h5>Alert Sent to Judge</h5>
+            <p>Tamper event: time, location, officer ID — all flagged instantly</p>
+          </div>
+          <span class="chain-badge alert">🚨 FLAGGED</span>
+        </div>
+        <div class="chain-row">
+          <div class="chain-icon-box">✅</div>
+          <div class="chain-row-text">
+            <h5>Judge Reviews Full Chain</h5>
+            <p>Complete audit trail — tamper-proof, court-ready</p>
+          </div>
+          <span class="chain-badge ok">✓ VERIFIED</span>
+        </div>
+      </div>
+      <div class="chain-text reveal">
+        <p class="eyebrow">// How The Lock Works</p>
+        <h2 class="section-heading">Every Byte<br/><em>Has A Witness.</em></h2>
+        <p>The moment evidence is registered, our system creates a <strong>SHA-256 cryptographic hash</strong> — a unique fingerprint of that data. Change even one pixel of an image, one letter of a report — the hash changes. The lie becomes visible.</p>
+        <p>This hash is stored on an <strong>immutable blockchain ledger</strong>. No administrator, no police officer, no corrupt official can alter what's been logged. The truth is permanent.</p>
+        <div class="tech-stack">
+          <span class="tech-pill">IBM Watsonx</span>
+          <span class="tech-pill">Blockchain Ledger</span>
+          <span class="tech-pill">SHA-256 Hash</span>
+          <span class="tech-pill">QR Verification</span>
+          <span class="tech-pill">Role-Based Access</span>
+          <span class="tech-pill">Real-Time Alerts</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="impact" class="section">
+  <div class="section-inner">
+    <p class="eyebrow reveal">// 04 — Why It Matters</p>
+    <h2 class="section-heading reveal">Numbers That<br/><em>Can't Be Tampered Either.</em></h2>
+    <div class="impact-grid">
+      <div class="impact-cell reveal">
+        <div class="impact-num">100%</div>
+        <div class="impact-label">Tamper detection — any modification triggers immediate alert</div>
+      </div>
+      <div class="impact-cell reveal">
+        <div class="impact-num">4</div>
+        <div class="impact-label">Role-based access — no one sees what they shouldn't</div>
+      </div>
+      <div class="impact-cell reveal">
+        <div class="impact-num">0</div>
+        <div class="impact-label">Evidence deletions — once filed, permanent forever</div>
+      </div>
+      <div class="impact-cell reveal">
+        <div class="impact-num">1 Click</div>
+        <div class="impact-label">Judge generates complete verified court report instantly</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION QUOTE -->
+<section id="vision">
+  <div class="vision-quote reveal">
+    We don't need to wait for society to change its mindset.
+    We need to close the loophole that gives criminals their confidence.
+  </div>
+  <p class="vision-attr reveal">— Founder, Nyay AI · Justice Technology</p>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="eyebrow">// See It In Action</p>
+  <h2 class="section-heading">The Prototype Is Live.<br/><em>Justice Is Ready.</em></h2>
+  <p>Built with IBM Watsonx. Designed for South Asia. Built to scale globally.</p>
+  <div class="hero-btns">
+    <a href="#" class="btn-red">▶ Watch Full Pitch</a>
+    <a href="https://arnubiswas20-dot.github.io/Nyay-AI/" target="_blank" class="btn-ghost">Try Live Prototype →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="logo"/>
+    <span>Nyay AI</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://arnubiswas20-dot.github.io/Nyay-AI/" target="_blank">Live Demo</a>
+    <a href="#problem">Problem</a>
+    <a href="#howitworks">Solution</a>
+  </div>
+  <p>© 2026 Nyay AI — Justice Technology. Built to protect truth.</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 90);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
