@@ -54,8 +54,9 @@ nav {
 .nav-logo img {
   height: 36px; width: 36px;
   object-fit: contain;
-  filter: invert(1);
-  opacity: .9;
+  border-radius: 50%;
+  background: #fff;
+  padding: 3px;
 }
 .nav-logo-text {
   font-family: 'Playfair Display', serif;
@@ -200,9 +201,9 @@ nav {
   background: linear-gradient(90deg, transparent, var(--red), transparent);
 }
 .hero-logo-card img {
-  width: 180px; height: 180px;
+  width: 200px; height: 200px;
   object-fit: contain;
-  filter: drop-shadow(0 0 24px rgba(212,22,60,.2));
+  filter: invert(1) drop-shadow(0 0 20px rgba(212,22,60,0.4));
 }
 .hero-logo-card-title {
   font-family: 'Playfair Display', serif;
@@ -512,7 +513,7 @@ footer {
   display: flex; align-items: center; gap: .6rem;
 }
 .footer-logo img {
-  height: 28px; filter: invert(1); opacity: .7;
+  height: 28px; border-radius: 50%; background: #fff; padding: 2px;
 }
 .footer-logo span {
   font-family: 'Playfair Display', serif;
@@ -586,7 +587,7 @@ footer p { font-size: .75rem; color: rgba(255,255,255,.3); }
         from crime scene to courtroom — so justice becomes impossible to suppress.
       </p>
       <div class="hero-btns">
-        <a href="#" class="btn-red">▶ Watch Pitch Video</a>
+        <a href="https://youtu.be/iEF7m7oLR2U?si=1zlWX3Nj_31e1Cx8" target="_blank" class="btn-red">▶ Watch Pitch Video</a>
         <a href="https://arnubiswas20-dot.github.io/Nyay-AI/" target="_blank" class="btn-ghost">Try Live Prototype →</a>
       </div>
     </div>
@@ -633,252 +634,4 @@ footer p { font-size: .75rem; color: rgba(255,255,255,.3); }
         <div class="pcard-line"></div>
         <div class="pcard-icon">📝</div>
         <h3>Pen & Paper Evidence Logs</h3>
-        <p>Officers still document crime scenes on paper — editable, losable, destroyable. A bribe buys a rewrite. The first version of truth disappears.</p>
-        <div class="pcard-stat">→ No original photo timestamp. No tamper detection.</div>
-      </div>
-      <div class="pcard reveal">
-        <div class="pcard-line"></div>
-        <div class="pcard-icon">🔬</div>
-        <h3>Lab Handoffs With No Lock</h3>
-        <p>Physical evidence reaches the lab with zero cryptographic verification. Lab technicians can alter reports, swap samples — no audit trail exists.</p>
-        <div class="pcard-stat">→ DNA reports changed. Cases dismissed. Accused walks free.</div>
-      </div>
-      <div class="pcard reveal">
-        <div class="pcard-line"></div>
-        <div class="pcard-icon">⚖️</div>
-        <h3>Judges See a Broken Story</h3>
-        <p>By the time evidence reaches court, pieces are missing, dates are wrong, reports contradict each other. Judges can't trust what they can't verify.</p>
-        <div class="pcard-stat">→ Justice delayed becomes justice denied.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="howitworks" class="section">
-  <div class="section-inner">
-    <p class="eyebrow reveal">// 02 — The System</p>
-    <h2 class="section-heading reveal">From Crime Scene<br/><em>To Courtroom — Sealed.</em></h2>
-    <div class="flow-grid">
-      <div class="flow-step reveal">
-        <div class="flow-num-wrap"><span class="flow-num">01</span></div>
-        <div class="flow-icon">📸</div>
-        <h4>Evidence Captured</h4>
-        <p>Officer photographs and registers all evidence digitally — on the spot, in real time.</p>
-      </div>
-      <div class="flow-step reveal">
-        <div class="flow-num-wrap"><span class="flow-num">02</span></div>
-        <div class="flow-icon">🔐</div>
-        <h4>QR + Hash Generated</h4>
-        <p>System instantly creates a cryptographic hash and a QR code — printed and attached to the physical evidence box.</p>
-      </div>
-      <div class="flow-step reveal">
-        <div class="flow-num-wrap"><span class="flow-num">03</span></div>
-        <div class="flow-icon">🧪</div>
-        <h4>Lab Verification</h4>
-        <p>Lab technician scans QR. If the photo hash doesn't match — <strong style="color:var(--red)">TAMPER ALERT fires instantly.</strong> Report is blocked until verified.</p>
-      </div>
-      <div class="flow-step reveal">
-        <div class="flow-num-wrap"><span class="flow-num">04</span></div>
-        <div class="flow-icon">🏥</div>
-        <h4>Hospital MLC Report</h4>
-        <p>Medical officer uploads MLC report with the same hash-locked process. Biological sample page goes to lab. Trauma report goes to court.</p>
-      </div>
-      <div class="flow-step reveal">
-        <div class="flow-num-wrap"><span class="flow-num">05</span></div>
-        <div class="flow-icon">👨‍⚖️</div>
-        <h4>Judge Gets Full Truth</h4>
-        <p>One verified dashboard: officer report + lab report + MLC + chain of custody timeline — all with date/time stamps. Court order generated in one click.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 ROLES -->
-<section id="roles" class="section">
-  <div class="section-inner">
-    <p class="eyebrow reveal">// 03 — Four Roles</p>
-    <h2 class="section-heading reveal">Every Handoff.<br/><em>Every Person. Accountable.</em></h2>
-    <div class="roles-grid">
-      <div class="role-card reveal">
-        <div class="role-emoji">👮</div>
-        <h3>Police Officer</h3>
-        <ul>
-          <li>Registers evidence digitally at crime scene</li>
-          <li>Clicks timestamped photos — immutable</li>
-          <li>Generates QR code for physical box</li>
-          <li>Can NEVER delete or edit after submission</li>
-        </ul>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">🔬</div>
-        <h3>Lab Technician</h3>
-        <ul>
-          <li>Scans QR on arriving evidence</li>
-          <li>Hash verified before report writing</li>
-          <li>Tamper alert blocks chain if mismatch</li>
-          <li>Report locked once submitted</li>
-        </ul>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">🏥</div>
-        <h3>Hospital / Doctor</h3>
-        <ul>
-          <li>Uploads MLC report digitally</li>
-          <li>Biological sample page → lab (hash-locked)</li>
-          <li>Victim trauma report → court (sealed)</li>
-          <li>Same QR + hash verification process</li>
-        </ul>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">👨‍⚖️</div>
-        <h3>Judge</h3>
-        <ul>
-          <li>Sees complete verified case file</li>
-          <li>Full chain-of-custody timeline</li>
-          <li>Tamper alerts visible with timestamps</li>
-          <li>One-click court report generation</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CHAIN VISUAL -->
-<section id="chain" class="section">
-  <div class="section-inner">
-    <div class="chain-explainer">
-      <div class="chain-visual reveal">
-        <div class="chain-row">
-          <div class="chain-icon-box">📸</div>
-          <div class="chain-row-text">
-            <h5>Evidence Photographed</h5>
-            <p>Hash: <code style="color:var(--gold);font-size:.75rem">a3f9d2...c4e1</code> · Officer ID verified</p>
-          </div>
-          <span class="chain-badge ok">✓ LOGGED</span>
-        </div>
-        <div class="chain-row">
-          <div class="chain-icon-box">📦</div>
-          <div class="chain-row-text">
-            <h5>Physical Box Transferred</h5>
-            <p>QR printed · sealed · courier record timestamped</p>
-          </div>
-          <span class="chain-badge ok">✓ SEALED</span>
-        </div>
-        <div class="chain-row">
-          <div class="chain-icon-box">⚠️</div>
-          <div class="chain-row-text">
-            <h5>Lab Scan — Hash Mismatch</h5>
-            <p>Photo hash doesn't match original: <code style="color:var(--red);font-size:.75rem">MISMATCH</code></p>
-          </div>
-          <span class="chain-badge alert">⚠ TAMPER</span>
-        </div>
-        <div class="chain-row">
-          <div class="chain-icon-box">🚨</div>
-          <div class="chain-row-text">
-            <h5>Alert Sent to Judge</h5>
-            <p>Tamper event: time, location, officer ID — all flagged instantly</p>
-          </div>
-          <span class="chain-badge alert">🚨 FLAGGED</span>
-        </div>
-        <div class="chain-row">
-          <div class="chain-icon-box">✅</div>
-          <div class="chain-row-text">
-            <h5>Judge Reviews Full Chain</h5>
-            <p>Complete audit trail — tamper-proof, court-ready</p>
-          </div>
-          <span class="chain-badge ok">✓ VERIFIED</span>
-        </div>
-      </div>
-      <div class="chain-text reveal">
-        <p class="eyebrow">// How The Lock Works</p>
-        <h2 class="section-heading">Every Byte<br/><em>Has A Witness.</em></h2>
-        <p>The moment evidence is registered, our system creates a <strong>SHA-256 cryptographic hash</strong> — a unique fingerprint of that data. Change even one pixel of an image, one letter of a report — the hash changes. The lie becomes visible.</p>
-        <p>This hash is stored on an <strong>immutable blockchain ledger</strong>. No administrator, no police officer, no corrupt official can alter what's been logged. The truth is permanent.</p>
-        <div class="tech-stack">
-          <span class="tech-pill">IBM Watsonx</span>
-          <span class="tech-pill">Blockchain Ledger</span>
-          <span class="tech-pill">SHA-256 Hash</span>
-          <span class="tech-pill">QR Verification</span>
-          <span class="tech-pill">Role-Based Access</span>
-          <span class="tech-pill">Real-Time Alerts</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- IMPACT -->
-<section id="impact" class="section">
-  <div class="section-inner">
-    <p class="eyebrow reveal">// 04 — Why It Matters</p>
-    <h2 class="section-heading reveal">Numbers That<br/><em>Can't Be Tampered Either.</em></h2>
-    <div class="impact-grid">
-      <div class="impact-cell reveal">
-        <div class="impact-num">100%</div>
-        <div class="impact-label">Tamper detection — any modification triggers immediate alert</div>
-      </div>
-      <div class="impact-cell reveal">
-        <div class="impact-num">4</div>
-        <div class="impact-label">Role-based access — no one sees what they shouldn't</div>
-      </div>
-      <div class="impact-cell reveal">
-        <div class="impact-num">0</div>
-        <div class="impact-label">Evidence deletions — once filed, permanent forever</div>
-      </div>
-      <div class="impact-cell reveal">
-        <div class="impact-num">1 Click</div>
-        <div class="impact-label">Judge generates complete verified court report instantly</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- VISION QUOTE -->
-<section id="vision">
-  <div class="vision-quote reveal">
-    We don't need to wait for society to change its mindset.
-    We need to close the loophole that gives criminals their confidence.
-  </div>
-  <p class="vision-attr reveal">— Founder, Nyay AI · Justice Technology</p>
-</section>
-
-<!-- CTA -->
-<section id="cta">
-  <p class="eyebrow">// See It In Action</p>
-  <h2 class="section-heading">The Prototype Is Live.<br/><em>Justice Is Ready.</em></h2>
-  <p>Built with IBM Watsonx. Designed for South Asia. Built to scale globally.</p>
-  <div class="hero-btns">
-    <a href="#" class="btn-red">▶ Watch Full Pitch</a>
-    <a href="https://arnubiswas20-dot.github.io/Nyay-AI/" target="_blank" class="btn-ghost">Try Live Prototype →</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">
-    <img src="logo.png" alt="logo"/>
-    <span>Nyay AI</span>
-  </div>
-  <div class="footer-links">
-    <a href="https://arnubiswas20-dot.github.io/Nyay-AI/" target="_blank">Live Demo</a>
-    <a href="#problem">Problem</a>
-    <a href="#howitworks">Solution</a>
-  </div>
-  <p>© 2026 Nyay AI — Justice Technology. Built to protect truth.</p>
-</footer>
-
-<script>
-  const reveals = document.querySelectorAll('.reveal');
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 90);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => obs.observe(el));
-</script>
-</body>
-</html>
+        <p>Officers still document crime scenes on paper — editable, losable, destroyable. A bribe buys a rewrite. The first version of truth disappears
